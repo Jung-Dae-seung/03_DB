@@ -403,13 +403,11 @@ ORDER BY E.EMP_NAME;
 -- 6. 급여등급별 최소급여(MIN_SAL)를 초과해서 받는 직원들의
 -- 사원명, 직급명,급여, 연봉(보너스포함)을 조회하시오.
 -- (연봉에 보너스포인트를 적용하시오.)
-SELECT  EMP_NAME, JOB_NAME, SALARY, (SALARY + ((SALARY * BONUS))) * 12  AS 연봉
+SELECT  EMP_NAME, JOB_NAME, SALARY, (SALARY + ((SALARY * NVL(BONUS,0)))) * 12  AS 연봉
 FROM EMPLOYEE E
 JOIN JOB J ON (E.JOB_CODE = J.JOB_CODE)
 JOIN SAL_GRADE S ON (E.SAL_LEVEL = S.SAL_LEVEL)
-WHERE E.SALARY > S.MIN_SAL
-AND E.BONUS IS NOT NULL
-ORDER BY E.EMP_NAME;
+WHERE E.SALARY > S.MIN_SAL;
 
 
 -- 7.한국(KO)과 일본(JP)에 근무하는 직원들의
